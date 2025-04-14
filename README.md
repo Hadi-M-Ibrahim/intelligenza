@@ -1,2 +1,2 @@
 # intelligenza
-An AI powered compiler
+An AI powered compiler.
