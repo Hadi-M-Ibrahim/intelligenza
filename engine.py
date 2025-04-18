@@ -41,7 +41,8 @@ def compile_code(code, instruction):
             }
          ],
         )
-        assembly_code = response.choices[0].message.content.strip()
+        assembly_code = response.output_text
+        print(assembly_code)
         return assembly_code
     except Exception as err:
         print(f"Error during API call. Please try again in a few minutes: {err}")
