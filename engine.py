@@ -9,7 +9,7 @@ def load_file(file_name):
         return file_contents
     
     except Exception as err:
-        print(f"Error loading file '{file_name}' insure the file exists in the current directory. Also be sure to incldude the .py file extension: {err}")
+        print(f"Error loading file '{file_name}' insure the file exists in the current directory. Also be sure to include the .py file extension: {err}")
         sys.exit(1)
 
 def opt_instruction(args):
@@ -19,7 +19,7 @@ def opt_instruction(args):
         return "Convert the following Python code to x86-64 assembly (GAS, AT&T syntax), applying only standard compiler optimizations (such as those performed at -O2 level). Return only the assembly code and nothing else. Python code: "
     return "Convert the following Python code to x86-64 assembly (GAS, AT&T syntax), making aggressive optimizations, including algorithmic (Big O) improvements where possible. Return only the assembly code and nothing else. Python code: "
 
-def compile_code(code, instruction):
+def compile_code(code, instruction, model="o4-mini", thinking_level="high"):
     OpenAI_key = os.getenv("OPENAI_API_KEY")
 
     if not OpenAI_key:
@@ -32,8 +32,8 @@ def compile_code(code, instruction):
 
     try:
         response = client.responses.create(
-            model="o4-mini",
-            reasoning={"effort": "high"},
+            model=model,
+            reasoning={"effort": thinking_level},
             input=[
             {
             "role": "user", 
