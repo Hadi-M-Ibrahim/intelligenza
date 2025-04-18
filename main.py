@@ -43,13 +43,15 @@ def parse_args():
         "file",
         help="Path to the python file to compile should end in .py"
     )
-    group.add_argument(
-        "--save",
+    
+    save_group = parser.add_mutually_exclusive_group()
+    save_group.add_argument(
+        "-save",
         action="store_true",
-        help="Keep the generated .s file after execution (default behavior)"
+        help="Keep the generated .s file after execution (default)"
     )
-    group.add_argument(
-        "--delete",
+    save_group.add_argument(
+        "-delete",
         action="store_true",
         help="Delete the generated .s file after execution"
     )
@@ -75,6 +77,9 @@ def main():
     if args.e:
         print("Compiling and running the generated assembly...")
         run_code(file_name)
+
+        if args.delete:
+            delete_code(file_name)
 
 if __name__ == "__main__":
     main()
