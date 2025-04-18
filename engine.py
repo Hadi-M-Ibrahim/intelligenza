@@ -9,7 +9,7 @@ def load_file(file_name):
         return file_contents
     
     except Exception as err:
-        print(f"Error loading file '{file_name}' insure the file exists in the current directory. Also be sure to incldude the .py file extension: {err}")
+        print(f"Error loading file '{file_name}' insure the file exists in the current directory. Also be sure to include the .py file extension: {err}")
         sys.exit(1)
 
 def opt_instruction(args):
@@ -41,7 +41,8 @@ def compile_code(code, instruction, model="o4-mini", thinking_level="high"):
             }
          ],
         )
-        assembly_code = response.choices[0].message.content.strip()
+        assembly_code = response.output_text
+        print(assembly_code)
         return assembly_code
     except Exception as err:
         print(f"Error during API call. Please try again in a few minutes: {err}")
