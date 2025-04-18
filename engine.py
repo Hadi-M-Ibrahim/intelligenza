@@ -50,9 +50,8 @@ def compile_code(code, instruction):
 
 
 def save_code(assembly_code, file_name):
-    base_name = os.path.splitext(file_name)[0]  # removes ".py"
     try:
-        with open(f'{base_name}.s', 'w') as f:
+        with open(f'{file_name}.s', 'w') as f:
             f.write(assembly_code)
 
     except Exception as err:
@@ -60,10 +59,9 @@ def save_code(assembly_code, file_name):
         sys.exit(1)
 
 def run_code(file_name):
-    base_name = os.path.splitext(file_name)[0]  # removes ".py"
     try:
-        os.system(f'gcc -o {base_name} {base_name}.s')
-        os.system(f'./{base_name}')
+        os.system(f'gcc -o {file_name} {file_name}.s')
+        os.system(f'./{file_name}')
 
     except Exception as err:
         print(f"Error running compiled code. Please try regenerating. Also, ensure gcc is installed: {err}")
