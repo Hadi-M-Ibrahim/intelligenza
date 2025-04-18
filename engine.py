@@ -19,7 +19,7 @@ def opt_instruction(args):
         return "Convert the following Python code to x86-64 assembly (GAS, AT&T syntax), applying only standard compiler optimizations (such as those performed at -O2 level). Return only the assembly code and nothing else. Python code: "
     return "Convert the following Python code to x86-64 assembly (GAS, AT&T syntax), making aggressive optimizations, including algorithmic (Big O) improvements where possible. Return only the assembly code and nothing else. Python code: "
 
-def compile_code(code, instruction, model="o4-mini", thinking_level="high"):
+def compile_code(code, instruction, model="o4-mini"):
     OpenAI_key = os.getenv("OPENAI_API_KEY")
 
     if not OpenAI_key:
@@ -33,7 +33,6 @@ def compile_code(code, instruction, model="o4-mini", thinking_level="high"):
     try:
         response = client.responses.create(
             model=model,
-            reasoning={"effort": thinking_level},
             input=[
             {
             "role": "user", 

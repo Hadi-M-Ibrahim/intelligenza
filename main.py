@@ -29,15 +29,9 @@ def parse_args():
     )
     parser.add_argument(
         "-m", "--model",
-        choices=["o4-mini", "o4-small", "o4-medium", "o4-large"],
+        choices=["o4-mini", "o4-low", "o4-medium", "o4-high", "GPT-4.1"],
         default="o4-mini",
         help="OpenAI model to use for compilation"
-    )
-    parser.add_argument(
-        "-t", "--thinking",
-        choices=["low", "medium", "high"],
-        default="high",
-        help="Thinking level for the model (only applicable to reasoning models)"
     )
     parser.add_argument(
         "file",
@@ -54,7 +48,7 @@ def main():
 
     instruction = opt_instruction(args)
 
-    assembly_code = compile_code(code, instruction, args.model, args.thinking)
+    assembly_code = compile_code(code, instruction, args.model)
 
     file_name = os.path.splitext(os.path.basename(file))[0]
     save_code(assembly_code, file_name)
