@@ -46,12 +46,12 @@ def parse_args():
     
     save_group = parser.add_mutually_exclusive_group()
     save_group.add_argument(
-        "-save",
+        "--save",
         action="store_true",
         help="Keep the generated .s file after execution (default)"
     )
     save_group.add_argument(
-        "-delete",
+        "--delete",
         action="store_true",
         help="Delete the generated .s file after execution"
     )
