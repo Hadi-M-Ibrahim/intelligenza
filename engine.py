@@ -42,7 +42,6 @@ def compile_code(code, instruction):
          ],
         )
         assembly_code = response.output_text
-        print(assembly_code)
         return assembly_code
     except Exception as err:
         print(f"Error during API call. Please try again in a few minutes: {err}")
@@ -61,6 +60,9 @@ def save_code(assembly_code, file_name):
 def run_code(file_name):
     try:
         os.system(f'gcc -o {file_name} {file_name}.s')
+        os.system(f'as {file_name}.s -o {file_name}.o')
+        os.system(f'ld {file_name}.o -o {file_name}')
+        os.system(f'chmod +x {file_name}')
         os.system(f'./{file_name}')
 
     except Exception as err:

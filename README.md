@@ -1,6 +1,6 @@
 # intelligenza
 
-An AI powered python compiler.
+An AI powered python compiler for linux.
 
 # Todo
 
