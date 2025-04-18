@@ -43,6 +43,16 @@ def parse_args():
         "file",
         help="Path to the python file to compile should end in .py"
     )
+    group.add_argument(
+        "--save",
+        action="store_true",
+        help="Keep the generated .s file after execution (default behavior)"
+    )
+    group.add_argument(
+        "--delete",
+        action="store_true",
+        help="Delete the generated .s file after execution"
+    )
     return parser.parse_args()
 
 
