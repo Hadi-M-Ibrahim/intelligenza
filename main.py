@@ -1,8 +1,10 @@
 import argparse
+import os
+from engine import load_file, opt_instruction, compile_code, save_code, run_code
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="intelligenza: a CLI compiler that takes adavantage of LLMs directly compiling python into machine code."
+        description="intelligenza: a CLI compiler that takes adavantage of LLMs compiling python into machine code (x86-64 ASM)."
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
@@ -26,9 +28,30 @@ def parse_args():
         help="Run code after compiling"
     )
     parser.add_argument(
-        "source_file",
-        help="Path to the source file to compile"
+        "file",
+        help="Path to the python file to compile should end in .py"
     )
     return parser.parse_args()
 
 
+def main():
+    args = parse_args()
+    file = args.file
+    
+    code = load_file(file)
+
+    instruction = opt_instruction(args)
+
+    assembly_code = compile_code(code, instruction)
+
+    file_name = os.path.splitext(os.path.basename(file))[0]
+    save_code(assembly_code, file_name)
+
+    print(f"Assembly code saved to {file_name}.s")
+
+    if args.e:
+        print("Compiling and running the generated assembly...")
+        run_code(file_name)
+
+if __name__ == "__main__":
+    main()
