@@ -1,6 +1,6 @@
 import argparse
 import os
-from engine import load_file, opt_instruction, compile_code, save_code, run_code
+from engine import load_file, opt_instruction, compile_code, save_code, run_code, delete_code
 
 def parse_args():
     parser = argparse.ArgumentParser(
