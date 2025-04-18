@@ -28,6 +28,18 @@ def parse_args():
         help="Run code after compiling"
     )
     parser.add_argument(
+        "-m", "--model",
+        choices=["o4-mini", "o4-small", "o4-medium", "o4-large"],
+        default="o4-mini",
+        help="OpenAI model to use for compilation"
+    )
+    parser.add_argument(
+        "-t", "--thinking",
+        choices=["low", "medium", "high"],
+        default="high",
+        help="Thinking level for the model (only applicable to reasoning models)"
+    )
+    parser.add_argument(
         "file",
         help="Path to the python file to compile should end in .py"
     )
@@ -42,7 +54,7 @@ def main():
 
     instruction = opt_instruction(args)
 
-    assembly_code = compile_code(code, instruction)
+    assembly_code = compile_code(code, instruction, args.model, args.thinking)
 
     file_name = os.path.splitext(os.path.basename(file))[0]
     save_code(assembly_code, file_name)
