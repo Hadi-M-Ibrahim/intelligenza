@@ -47,6 +47,7 @@ def parse_args():
 
 
 def main():
+    print("compiling python to x86-64 assembly...")
     args = parse_args()
     file = args.file
     
