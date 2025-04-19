@@ -29,21 +29,25 @@ def parse_args():
     )
     parser.add_argument(
         "-m", "--model",
-        choices=["o4-mini", "o4-low", "o4-medium", "o4-high", "GPT-4.1"],
+        choices=["o4-mini", "GPT-4.1"],
         default="o4-mini",
         help="OpenAI model to use for compilation"
     )
     parser.add_argument(
-        "file",
-        help="Path to the python file to compile should end in .py"
+        "-t", "--thinking",
+        choices=["low", "medium", "high"],
+        default="high",
+        help="Thinking level for the model (only applicable to o4-mini model)"
     )
-    
     parser.add_argument(
         "-d",
         action="store_true",
         help="Delete the generated .s file after execution (default is to keep it)"
     )
-    
+    parser.add_argument(
+        "file",
+        help="Path to the python file to compile should end in .py"
+    )
     return parser.parse_args()
 
 
@@ -56,7 +60,7 @@ def main():
 
     instruction = opt_instruction(args)
 
-    assembly_code = compile_code(code, instruction, args.model)
+    assembly_code = compile_code(code, instruction, args.model, args.thinking)
 
     file_name = os.path.splitext(os.path.basename(file))[0]
     save_code(assembly_code, file_name)
@@ -66,7 +70,6 @@ def main():
     if args.e:
         print("Compiling and running the generated assembly...")
         run_code(file_name)
-
         if args.d:
             delete_code(file_name)
 
