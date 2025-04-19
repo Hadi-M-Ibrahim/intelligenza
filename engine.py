@@ -41,7 +41,6 @@ def compile_code(code, instruction, model="o4-mini"):
          ],
         )
         assembly_code = response.output_text
-        print(assembly_code)
         return assembly_code
     except Exception as err:
         print(f"Error during API call. Please try again in a few minutes: {err}")
@@ -60,8 +59,20 @@ def save_code(assembly_code, file_name):
 def run_code(file_name):
     try:
         os.system(f'gcc -o {file_name} {file_name}.s')
+        os.system(f'as {file_name}.s -o {file_name}.o')
+        os.system(f'ld {file_name}.o -o {file_name}')
+        os.system(f'chmod +x {file_name}')
         os.system(f'./{file_name}')
 
     except Exception as err:
         print(f"Error running compiled code. Please try regenerating. Also, ensure gcc is installed: {err}")
         sys.exit(1)
+
+def delete_code(file_name):
+    try:
+        os.remove(f"{file_name}.s")
+        print(f"Deleted temporary file: {file_name}.s")
+        
+    except Exception as err:
+        print(f"Warning: Could not delete {file_name}.s — {err}")
+

@@ -1,6 +1,6 @@
 import argparse
 import os
-from engine import load_file, opt_instruction, compile_code, save_code, run_code
+from engine import load_file, opt_instruction, compile_code, save_code, run_code, delete_code
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -37,10 +37,18 @@ def parse_args():
         "file",
         help="Path to the python file to compile should end in .py"
     )
+    
+    parser.add_argument(
+        "-d",
+        action="store_true",
+        help="Delete the generated .s file after execution (default is to keep it)"
+    )
+    
     return parser.parse_args()
 
 
 def main():
+    print("compiling python to x86-64 assembly...")
     args = parse_args()
     file = args.file
     
@@ -58,6 +66,9 @@ def main():
     if args.e:
         print("Compiling and running the generated assembly...")
         run_code(file_name)
+
+        if args.d:
+            delete_code(file_name)
 
 if __name__ == "__main__":
     main()
