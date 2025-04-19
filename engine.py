@@ -80,11 +80,25 @@ def run_code(file_name):
         print(f"Error running compiled code. Please try regenerating. Also, ensure gcc is installed: {err}")
         sys.exit(1)
 
+import os
+
 def delete_code(file_name):
     try:
         os.remove(f"{file_name}.s")
         print(f"Deleted temporary file: {file_name}.s")
-        
     except Exception as err:
         print(f"Warning: Could not delete {file_name}.s — {err}")
+
+    try:
+        os.remove(f"{file_name}.o")
+        print(f"Deleted temporary file: {file_name}.o")
+    except Exception as err:
+        print(f"Warning: Could not delete {file_name}.o — {err}")
+
+    try:
+        os.remove(f"./{file_name}")
+        print(f"Deleted temporary file: ./{file_name}")
+    except Exception as err:
+        print(f"Warning: Could not delete ./{file_name} — {err}")
+
 
